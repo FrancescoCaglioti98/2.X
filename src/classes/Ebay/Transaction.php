@@ -1,6 +1,7 @@
 <?php
-
 declare(strict_types=1);
+
+namespace App\Classes\Ebay;
 
 
 class Transaction
@@ -11,6 +12,7 @@ class Transaction
 
     public function __construct(float $amount, string $description)
     {
+        echo "Loaded Ebay Transaction<br>";
         $this->amount = $amount;
         $this->description = $description;
     }
