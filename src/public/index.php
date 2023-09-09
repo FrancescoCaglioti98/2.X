@@ -1,24 +1,29 @@
 <?php
 declare(strict_types = 1);
-include_once '../config/define.php';
 
-use App\Classes\Amazon\Transaction as AmazonTransaction;
-use App\Classes\Ebay\Transaction as EbayTransaction;
+spl_autoload_register(function ($class) {
 
-$AmazonTransaction = (new AmazonTransaction( 100, 'Transaction 1' ))
-    ->addTax(8)
-    ->applayDiscount(10);
+    $current_directory = __DIR__;
 
-$amount =  $AmazonTransaction->getAmount();
-var_dump( $amount );
-$AmazonTransaction = null;
+    $current_directory = explode('\\', $current_directory);
+    array_pop($current_directory);
+    $current_directory = implode( '/', $current_directory );
 
-echo '<br><br>';
 
-$EbayTransaction = (new EbayTransaction( 200, 'Transaction 2' ))
+    $path = $current_directory . '/' . str_replace('\\', '/', $class) . '.php';
+    
+    require($path);
+
+});
+
+
+
+use App\Classes\Amazon\Transaction;
+
+$trnsaction = (new Transaction( 200, 'Transaction 2' ))
     ->addTax(8)
     ->applayDiscount(20);
 
-$amount =  $EbayTransaction->getAmount();
+$amount =  $trnsaction->getAmount();
 var_dump( $amount );
-$EbayTransaction = null;
+$trnsaction = null;
