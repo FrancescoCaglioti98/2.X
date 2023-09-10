@@ -14,6 +14,8 @@ class Transaction
 
     private string $status;
 
+    static public int $count = 0;
+
     public function __construct(float $amount, string $description)
     {
 
@@ -23,6 +25,8 @@ class Transaction
         $this->description = $description;
 
         $this->status = Status::PENDING;
+
+        self::$count++;
     }
 
     public function addTax(float $rate): Transaction

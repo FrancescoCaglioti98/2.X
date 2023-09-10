@@ -20,5 +20,5 @@ use App\Enum\Status;
 
 
 $AmazonTransaction = new AmazonTransaction(200, 'Transaction 2');
-$AmazonTransaction->setStatus(Status::PAID);
-var_dump( $AmazonTransaction->getStatus() );
+
+var_dump( $AmazonTransaction::$count );
