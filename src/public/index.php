@@ -12,11 +12,13 @@ require $current_directory . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 
 
 use App\Classes\Amazon\Transaction as AmazonTransaction;
-use App\Classes\Ebay\Transaction as EbayTransaction;
+use App\Enum\Status;
 
+// use App\Classes\Ebay\Transaction as EbayTransaction;
 // $EbayTransaction = new EbayTransaction(200, 'Transaction 2');
 
 
 
 $AmazonTransaction = new AmazonTransaction(200, 'Transaction 2');
-echo $AmazonTransaction::STATUS_PAID;
+$AmazonTransaction->setStatus(Status::PAID);
+var_dump( $AmazonTransaction->getStatus() );

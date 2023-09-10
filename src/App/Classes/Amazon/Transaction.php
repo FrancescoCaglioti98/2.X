@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Classes\Amazon;
 
+use App\Enum\Status;
 use InvalidArgumentException;
 
 class Transaction
@@ -13,19 +14,6 @@ class Transaction
 
     private string $status;
 
-
-
-    public const STATUS_PAID = 'paid';
-    public const STATUS_PENDING = 'pending';
-    public const STATUS_DECLINED = 'declined';
-
-    public const ALL_STATUSES = [
-        self::STATUS_DECLINED => 'Declined',
-        self::STATUS_PENDING => 'Pending',
-        self::STATUS_PAID => 'Paid'
-    ];
-
-
     public function __construct(float $amount, string $description)
     {
 
@@ -33,6 +21,8 @@ class Transaction
 
         $this->amount = $amount;
         $this->description = $description;
+
+        $this->status = Status::PENDING;
     }
 
     public function addTax(float $rate): Transaction
@@ -67,14 +57,18 @@ class Transaction
     public function setStatus( string $status ) : Transaction
     {
 
-        if( ! isset( self::ALL_STATUSES[$status] ) ) {
+        if( !isset( Status::ALL_STATUSES[$status] ) ) {
             throw new InvalidArgumentException("Invalid Status Used");
         }
 
         $this->status = $status;
-
         return $this;
 
+    }
+
+    public function getStatus() : string
+    {
+        return $this->status;
     }
 
     /**
