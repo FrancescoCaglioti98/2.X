@@ -1,0 +1,17 @@
+{
+    "name": "franc/program-with-gio2.x",
+    "description": "PHP Study",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\" : "src/App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Francesco Caglioti",
+            "email": "francesco.caglioti@outlook.com"
+        }
+    ],
+    "require": {}
+}

@@ -1,24 +1,17 @@
 <?php
 declare(strict_types=1);
 
-spl_autoload_register(function ($class) {
+$current_directory = __DIR__;
 
-    $current_directory = __DIR__;
+$current_directory = explode('\\', $current_directory);
+array_pop($current_directory);
+array_pop($current_directory);
+$current_directory = implode('/', $current_directory);
 
-    $current_directory = explode('\\', $current_directory);
-    array_pop($current_directory);
-    $current_directory = implode('/', $current_directory);
-
-
-    $path = $current_directory . '/' . str_replace('\\', '/', $class) . '.php';
-
-    require($path);
-
-});
+require $current_directory . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 
 
-
-use App\Classes\Amazon\Transaction;
+use App\Classes\Ebay\Transaction;
 
 $trnsaction = (new Transaction(200, 'Transaction 2'))
     ->addTax(8)
