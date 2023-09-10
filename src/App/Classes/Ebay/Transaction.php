@@ -9,12 +9,17 @@ class Transaction
     private float $amount;
     private string $description;
 
+    private const STATUS_PAID = 'paid';
+    private const STATUS_PENDING = 'pending';
+    private const STATUS_DECLINED = 'declined';
 
     public function __construct(float $amount, string $description)
     {
         echo "Loaded Ebay Transaction<br>";
         $this->amount = $amount;
         $this->description = $description;
+
+        echo self::STATUS_PAID;
     }
 
     public function addTax(float $rate): Transaction

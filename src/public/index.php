@@ -11,12 +11,12 @@ $current_directory = implode('/', $current_directory);
 require $current_directory . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 
 
-use App\Classes\Ebay\Transaction;
+use App\Classes\Amazon\Transaction as AmazonTransaction;
+use App\Classes\Ebay\Transaction as EbayTransaction;
 
-$trnsaction = (new Transaction(200, 'Transaction 2'))
-    ->addTax(8)
-    ->applayDiscount(20);
+// $EbayTransaction = new EbayTransaction(200, 'Transaction 2');
 
-$amount = $trnsaction->getAmount();
-var_dump($amount);
-$trnsaction = null;
+
+
+$AmazonTransaction = new AmazonTransaction(200, 'Transaction 2');
+echo $AmazonTransaction::STATUS_PAID;
