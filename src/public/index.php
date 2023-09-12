@@ -20,5 +20,4 @@ use App\Enum\Status;
 
 
 $AmazonTransaction = new AmazonTransaction(200, 'Transaction 2');
-
-var_dump( $AmazonTransaction::$count );
+var_dump( $AmazonTransaction->process() );
