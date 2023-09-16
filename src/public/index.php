@@ -11,13 +11,15 @@ $current_directory = implode('/', $current_directory);
 require $current_directory . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 
 
-use App\Classes\Amazon\Transaction as AmazonTransaction;
-use App\Enum\Status;
+$ar_fields = [
+    // new \App\Classes\Fields\Field('baseField'),  //ELIMINATA PERCHÈ TRASFORMATA IN ASTRATTA
+    new \App\Classes\Fields\Text('textField'),
+    // new \App\Classes\Fields\Boolean('booleandField'),    //ELIMINATA PERCHÈ TRASFORMATA IN ASTRATTA
+    new \App\Classes\Fields\Checkbox('checkboxField'),
+    new \App\Classes\Fields\Radio('radioField'),
+];
 
-// use App\Classes\Ebay\Transaction as EbayTransaction;
-// $EbayTransaction = new EbayTransaction(200, 'Transaction 2');
 
-
-
-$AmazonTransaction = new AmazonTransaction(200, 'Transaction 2');
-var_dump( $AmazonTransaction->process() );
+foreach ($ar_fields as $key => $field) {
+    echo $field->render() . '<br>';
+}
