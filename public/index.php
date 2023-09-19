@@ -6,7 +6,6 @@ use App\Classes\Amazon\Transaction;
 $current_directory = __DIR__;
 $current_directory = explode('\\', $current_directory);
 array_pop($current_directory);
-array_pop($current_directory);
 $current_directory = implode('/', $current_directory);
 
 require $current_directory . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
