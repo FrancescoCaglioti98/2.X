@@ -9,7 +9,7 @@ use InvalidArgumentException;
 
 class Transaction
 {
-    private float $amount;
+    public float $amount;
     private string $description;
     private float $tax = 0;
     private float $discount = 0;
