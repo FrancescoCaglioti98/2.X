@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 use App\Classes\Amazon\Transaction;
+use App\Classes\Tools\Invoice;
 
 $current_directory = __DIR__;
 $current_directory = explode('\\', $current_directory);
@@ -10,39 +12,36 @@ $current_directory = implode('/', $current_directory);
 
 require $current_directory . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 
-echo '<pre>';
 
-$amazon1_1 = new Transaction(20, 'Test Compare Objects');
-$amazon1_2 = new Transaction(100, 'Test Compare Objects 1');
+$test_ar = [
+    'a' => 1,
+    'b' => 2,
+    'c' => 3
+];
+$serialized_test_ar = serialize( $test_ar );
 
-var_dump( $amazon1_1 == $amazon1_2 );
-echo '<br>';
-var_dump( $amazon1_1 === $amazon1_2 );
-echo '<br>';
-
-echo '<br>';
-echo '<br>';
-$amazon2_1 = new Transaction(20, 'Test Compare Objects');
-$amazon2_2 = new Transaction(20, 'Test Compare Objects');
-
-var_dump( $amazon2_1 == $amazon2_2 );
-echo '<br>';
-var_dump( $amazon2_1 === $amazon2_2 );
-echo '<br>';
+echo serialize(true) . '<br>';
+echo serialize(1) . '<br>';
+echo serialize(2.5) . '<br>';
+echo serialize('hello world') . '<br>';
+echo serialize([1, 2, 3]) . '<br>';
+echo $serialized_test_ar . '<br>';
 
 
-echo '<br>';
-echo '<br>';
-$amazon3_1 = new Transaction(20, 'Test Compare Objects');
-$amazon3_2 = $amazon3_1;
+var_dump( unserialize( $serialized_test_ar ));
 
-var_dump( $amazon3_1 == $amazon3_2 );
-echo '<br>';
-var_dump( $amazon3_1 === $amazon3_2 );
-echo '<br>';
 
+
+echo '<br><br><br>';
+
+
+$invoice = new Invoice(100, 'Test serialization Object', '0123456789');
+
+$invoice_serialized = serialize($invoice);
+
+var_dump( $invoice_serialized );
 echo '<br>';
-$amazon3_2->amount = 50;
-var_dump($amazon3_1);
+$invoice2 = unserialize( $invoice_serialized );
+var_dump( $invoice2 );
 echo '<br>';
-var_dump($amazon3_2);
+var_dump( $invoice === $invoice2 );
