@@ -2,21 +2,40 @@
 
 namespace App\Classes\Tools;
 
+use App\Exception\CustomException;
+use App\Exception\MissingBillingInfoException;
+use Exception;
+use InvalidArgumentException;
+
 class Invoice
 {
     public string $id;
     public float $amount;
     public string $description;
     public string $creditCardNumber;
+    public Customer $customer;
 
-    public function __construct( float $amount, string $description, string $creditCardNumber )
+    public function __construct( Customer $customer  )
     {
-     
-        $this->id = uniqid( 'invoice_n_' );
-        $this->amount = $amount;
-        $this->description = $description;
-        $this->creditCardNumber = $creditCardNumber;
-        
+        $this->customer = $customer;
+    }
+
+    public function process(float $amount) : void
+    {
+
+        if( $amount <= 0 ){
+            throw CustomException::InvalidInvoiceAmount();
+        }
+
+        if( empty( $this->customer->getBillingInfo() ) ){
+            throw CustomException::MissingBillingInfo();
+        }
+
+        echo 'Processing $' . $amount . ' invoice -';
+
+        sleep(1);
+
+        echo 'OK';
     }
 
 
