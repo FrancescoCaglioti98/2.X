@@ -5,6 +5,36 @@ class Home
 {
     public function index() : string
     {
-        return 'This is the home';
+
+        /**
+         * La variabile $_REQUEST contiene tutte le informazioni prese da $_GET, $_POST e $_COOKIE e le propone come un unico array
+         * 
+         * Nota bene:
+         *      - Se sono presenti gli stessi indici sia in $_GET che in $_POST vinceranno sempre quelli di $_POST
+         *
+         * $_POST["amount"] => 100
+         * $_GET["amount"] => 250
+         * 
+         * $_REQUEST["amount"] => 100
+         * 
+         * 
+         * Nota bene pt2:
+         *      - La presenza/ordine di alcune di queste variabili dipende dalla configurazione del file php.ini
+         *        Di base, per esempio, non viene accorpato il $_COOKIE per motivi di sicurezza
+         * 
+         * Le variabili di gestione per il php.ini sono:
+         *      -request_order
+         *      - variables_order
+         * 
+         * Generalmente non è consigliato utilizzare $_REQUEST a meno a che non siano presenti delle ottime attenuanti
+         * 
+         */
+        // echo'<pre>';var_dump($_REQUEST);echo'</pre>';
+        // echo'<pre>';var_dump($_GET);echo'</pre>';
+        
+        // echo'<pre>';var_dump($_POST);echo'</pre>';
+    
+
+        return 'Home';
     }
 }

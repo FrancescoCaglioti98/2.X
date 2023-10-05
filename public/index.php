@@ -13,16 +13,17 @@ require $current_directory . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 
 $router = new Router();
 
-$router->register( '/', [App\Classes\Home::class, 'index'] )
-        ->register('/invoices', [App\Classes\Invoices::class, 'index'])
-        ->register('/invoices/create', [App\Classes\Invoices::class, 'createInvoice']);
+$router->get( '/', [App\Classes\Home::class, 'index'] )
+        ->get('/invoices', [App\Classes\Invoices::class, 'index'])
+        ->get('/invoices/create', [App\Classes\Invoices::class, 'createInvoice'])
+        ->post('/invoices/create', [App\Classes\Invoices::class, 'store']);
 
         
-$router->register('/secondHome', function(){
+$router->get('/secondHome', function(){
     echo 'Home';
 });
-$router->register( '/invoices', function(){
+$router->get( '/invoices', function(){
     echo 'Invoices';
 } );
 
-echo $router->resolve( $_SERVER['REQUEST_URI'] );
+echo $router->resolve( $_SERVER['REQUEST_URI'], $_SERVER["REQUEST_METHOD"] );
