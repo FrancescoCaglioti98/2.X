@@ -1,9 +1,10 @@
 <?php
+
 namespace App\Classes;
 
 class Home
 {
-    public function index() : string
+    public function index(): string
     {
 
         /**
@@ -31,12 +32,33 @@ class Home
          */
         // echo'<pre>';var_dump($_REQUEST);echo'</pre>';
         // echo'<pre>';var_dump($_GET);echo'</pre>';
-        
+
         // echo'<pre>';var_dump($_POST);echo'</pre>';
 
-        $_SESSION['count'] = ( $_SESSION["count"] ?? 0 ) + 1;
-        setcookie('userId', 15, time() + 10, "/", '', false, false);
+        // $_SESSION['count'] = ( $_SESSION["count"] ?? 0 ) + 1;
+        // setcookie('userId', 15, time() + 10, "/", '', false, false);
+
+        $form = '
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="recepit">
+            <button type="submit">Upload</button>
+        </form>
+        ';
+        return $form;
+
+
 
         return 'Home';
+    }
+
+    public function upload()
+    {
+
+        $file_path = STORAGE_PATH . DIRECTORY_SEPARATOR . $_FILES["recepit"]["name"];
+        
+        move_uploaded_file(
+            $_FILES["recepit"]["tmp_name"],
+            $file_path
+        );
     }
 }
