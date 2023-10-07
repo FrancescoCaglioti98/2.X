@@ -33,7 +33,9 @@ class Home
         // echo'<pre>';var_dump($_GET);echo'</pre>';
         
         // echo'<pre>';var_dump($_POST);echo'</pre>';
-    
+
+        $_SESSION['count'] = ( $_SESSION["count"] ?? 0 ) + 1;
+        setcookie('userId', 15, time() + 10, "/", '', false, false);
 
         return 'Home';
     }

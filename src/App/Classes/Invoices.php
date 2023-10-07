@@ -5,6 +5,7 @@ class Invoices
 {
     public function index() : string
     {
+        unset( $_SESSION );
         return 'This is the invoices page';
     }
 
