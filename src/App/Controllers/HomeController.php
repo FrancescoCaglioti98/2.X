@@ -46,14 +46,22 @@ class HomeController
 
     }
 
+    public function download()
+    {
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: attachment;filename="myfile.pdf"');
+        readfile( STORAGE_PATH . '/FILE_NAME' );
+    }
+
     public function upload()
     {
-
         $file_path = STORAGE_PATH . DIRECTORY_SEPARATOR . $_FILES["recepit"]["name"];
 
         move_uploaded_file(
             $_FILES["recepit"]["tmp_name"],
             $file_path
         );
+
+        header('Location: /');
     }
 }
