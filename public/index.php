@@ -11,17 +11,18 @@ $base_path = implode('/', $current_directory);
 
 require $base_path . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 define( 'STORAGE_PATH', $base_path . DIRECTORY_SEPARATOR . 'Storage' );
+define( 'VIEW_PATH', $base_path . DIRECTORY_SEPARATOR . 'Views' );
 
 session_start();
 
 $router = new Router();
 
 $router
-    ->get('/', [App\Classes\Home::class, 'index'])
-    ->get('/invoices', [App\Classes\Invoices::class, 'index'])
-    ->get('/invoices/create', [App\Classes\Invoices::class, 'createInvoice'])
-    ->post('/invoices/create', [App\Classes\Invoices::class, 'store'])
-    ->post('/upload', [App\Classes\Home::class, 'upload']);
+    ->get('/', [App\Controllers\HomeController::class, 'index'])
+    ->get('/invoices', [App\Controllers\InvoicesController::class, 'index'])
+    ->get('/invoices/create', [App\Controllers\InvoicesController::class, 'createInvoice'])
+    ->post('/invoices/create', [App\Controllers\InvoicesController::class, 'store'])
+    ->post('/upload', [App\Controllers\HomeController::class, 'upload']);
 
 $router->get('/secondHome', function () {
     echo 'Home';
