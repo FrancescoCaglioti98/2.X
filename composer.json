@@ -13,5 +13,7 @@
             "email": "francesco.caglioti@outlook.com"
         }
     ],
-    "require": {}
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
+    }
 }

@@ -12,6 +12,10 @@ array_pop($current_directory);
 $base_path = implode('/', $current_directory);
 
 require $base_path . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable($base_path);
+$dotenv->load();
+
 define('STORAGE_PATH', $base_path . DIRECTORY_SEPARATOR . 'Storage');
 define('VIEW_PATH', $base_path . DIRECTORY_SEPARATOR . 'Views');
 
