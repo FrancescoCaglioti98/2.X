@@ -35,7 +35,7 @@ class Router
     {
         $route = explode('?', $requestUri)[0];
         $requestMethod = strtolower($requestMethod);
-        
+
         $action = $this->routes[$requestMethod][$route] ?? null;
 
         if( is_callable($action) ) {
@@ -47,7 +47,6 @@ class Router
             [$class, $method] = $action;
 
             if( class_exists( $class ) ){
-
                 $class = new $class();
                 if( method_exists( $class, $method ) ){
                     return call_user_func_array( [ $class, $method ], [] );

@@ -1,113 +1,41 @@
 <?php
-
 namespace App\Controllers;
 
+use App\App;
 use App\View;
-use Exception;
-use PDO;
-use PDOException;
+use App\Models\User;
+use App\Models\SignUp;
+use App\Models\Invoice;
 
 class HomeController
 {
     public function index(): string
     {
 
-        /**
-         * La variabile $_REQUEST contiene tutte le informazioni prese da $_GET, $_POST e $_COOKIE e le propone come un unico array
-         * 
-         * Nota bene:
-         *      - Se sono presenti gli stessi indici sia in $_GET che in $_POST vinceranno sempre quelli di $_POST
-         *
-         * $_POST["amount"] => 100
-         * $_GET["amount"] => 250
-         * 
-         * $_REQUEST["amount"] => 100
-         * 
-         * 
-         * Nota bene pt2:
-         *      - La presenza/ordine di alcune di queste variabili dipende dalla configurazione del file php.ini
-         *        Di base, per esempio, non viene accorpato il $_COOKIE per motivi di sicurezza
-         * 
-         * Le variabili di gestione per il php.ini sono:
-         *      -request_order
-         *      - variables_order
-         * 
-         * Generalmente non è consigliato utilizzare $_REQUEST a meno a che non siano presenti delle ottime attenuanti
-         * 
-         */
-        // echo'<pre>';var_dump($_REQUEST);echo'</pre>';
-        // echo'<pre>';var_dump($_GET);echo'</pre>';
+        
+        $db = App::db();
 
-        // echo'<pre>';var_dump($_POST);echo'</pre>';
-
-        // $_SESSION['count'] = ( $_SESSION["count"] ?? 0 ) + 1;
-        // setcookie('userId', 15, time() + 10, "/", '', false, false);
-
-        // return ( new View('index') )->render();
-
-
-        try {
-
-            $db = new PDO(
-                'mysql:host='. $_ENV["DB_HOST"] .';dbname=' . $_ENV["DB_DATABASE"],
-                $_ENV["DB_USER"],
-                $_ENV["DB_PASS"],
-                [
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
-                ]
-            );
-
-        } catch (\PDOException $e) {
-            throw new PDOException($e->getMessage(), (int) $e->getCode());
-        }
-
-        $email  = 'jonny@doe.com';
-        $name   = 'John Doe';
+        $email  = 'Jhonny@doe.com';
+        $name   = 'Jhonny Doe';
         $amount = 25;
 
 
-        try {
-            $db->beginTransaction();
+        $userModel = new User();
+        $invoiceModel = new Invoice();
 
-            $newUserInsert = $db->prepare(
-                "INSERT INTO users ( email, full_name, is_active, created_at )
-                VALUES ( ?, ?, 1, NOW() )"
-            );
-    
-            $newInvoiceInsert = $db->prepare(
-                "INSERT INTO invoices ( amount, user_id )
-                VALUES ( ?, ? )"
-            );
-    
-            $newUserInsert->execute([ $email, $name ]);
-            $userID = (int) $db->lastInsertId();
-    
-            throw new Exception('TEST');
+        $userInfo = [
+            "email" => $email,
+            "name" => $name
+        ];
 
-            $newInvoiceInsert->execute([$amount, $userID]);
-    
-            $db->commit();
-        } catch (\Throwable $th) {
-            if( $db->inTransaction() ){
-                $db->rollBack();
-            }
-        }
+        $invoiceInfo = [
+            "amount" => $amount
+        ];
 
-        $fetch = $db->prepare(
-            "SELECT invoices.id as invoice_id,
-                    amount,
-                    user_id,
-                    full_name
-            FROM    invoices
-            INNER JOIN users ON user_id = users.id
-            WHERE   email = ?"
-        );
 
-        $fetch->execute([$email]);
+        $invoiceId = ( new SignUp( $userModel, $invoiceModel ) )->register( $userInfo, $invoiceInfo );
 
-        echo'<pre>';var_dump($fetch->fetchAll());die();
-
-        return (string) View::render('index', ['foo' => 'bar']);
+        return (string) View::render('index', ['invoice' => $invoiceModel->find( $invoiceId ) ]);
         
     }
 
